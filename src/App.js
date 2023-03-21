@@ -1,14 +1,12 @@
+import React, { useState } from "react";
 import axios from 'axios';
+import "./tailwindcss.css";
+import "./scss/app.scss";
+import Search from './comp/search/Search';
+import Suggestion from './comp/search/Suggestion';
 
-//console.log(process.env.REACT_APP_API_KEY);
-//const key = process.env.REACT_APP_API_KEY;
 
 var city = "cesis";
-
-
-
-
-
 
 
 function get_city_json(name){
@@ -31,11 +29,30 @@ function get_city_json(name){
   });
 }
 
-console.log(get_city_json("riga"));
+
 
 function App() {
+  const [suggestion, setSuggestion] = useState([]);
+
+  
+
   return (
-    <></>
+    <div className='bg-overlay'>
+      <div className='main_container container mx-auto xl:max-w-xl'>
+        <Search setSuggestion={setSuggestion}/>
+
+        <div className='suggestion-container'>
+          {suggestion.map(x => {
+            console.log("recv",suggestion);
+            return <Suggestion text={x.target} />;
+          })}
+          
+          
+
+        </div>
+      </div>
+
+    </div>
   );
 }
 

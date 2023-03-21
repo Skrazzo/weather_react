@@ -1,0 +1,42 @@
+@import "../scss/colors.scss";
+
+body{
+    background-image: url($app_background);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.main_container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    height: 100vh;
+}
+
+.bg-overlay{
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    backdrop-filter: blur(0px);
+
+    transition: 500ms;
+}
+
+.search-input-focus{
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    backdrop-filter: blur(10px);
+}
+
+
+// ------------- suggestion container -----------
+.suggestion-container{
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    
+    div{
+        padding: 6px 20px;
+        background-color: darken($color: $div_color_primary, $amount: 10);
+        border-bottom: 1px solid rgba($color: black, $alpha: 0.3);
+    }
+}
+
