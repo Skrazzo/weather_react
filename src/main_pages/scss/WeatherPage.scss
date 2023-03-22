@@ -1,0 +1,18 @@
+@import "../../public/colors.scss";
+
+html{
+    background-color: #000000;
+    background-image: url($app_background);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.bg-overlay{
+    background-color: rgba($color: #000000, $alpha: 0.2);
+}
+
+// ------------- weather big cards -------------
+.weather_main_card{
+    background-color: rgba($color: #202020, $alpha: 1);
+}

@@ -1,11 +1,6 @@
-@import "../scss/colors.scss";
+@import "../../public/colors.scss";
 
-body{
-    background-image: url($app_background);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:cover;
-}
+
 
 .main_container{
     display: flex;

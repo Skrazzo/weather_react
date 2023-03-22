@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import "./Search.scss";
 import { SearchHeart } from 'react-bootstrap-icons';
 import $ from "jquery";
-import cities from "../../cities.json";
+import cities from "../../public/cities.json";
+import { useNavigate } from 'react-router-dom';
 
 var stringSimilarity = require("string-similarity");
 
@@ -13,7 +14,7 @@ var stringSimilarity = require("string-similarity");
 setInterval(() => {
     const sr_input = $(".search-input")[0];
 
-    if(document.activeElement == sr_input){
+    if(document.activeElement === sr_input){
         // change bg-overlay css 
         if(!$(".bg-overlay").hasClass("search-input-focus")){
             $(".bg-overlay").addClass("search-input-focus");
@@ -26,6 +27,7 @@ setInterval(() => {
 }, 200);
 
 export default function Search(args) {
+    const navigate = useNavigate();
 
     function change_class_t_suggestion(bool){
         // if true, then change to suggestion class
@@ -49,14 +51,14 @@ export default function Search(args) {
     function onSearchChangeHandler(e){
         const text = e.target.value;
         
-        if(text == ""){
+        if(text === ""){
             change_class_t_suggestion(false);
             args.setSuggestion([]);
         }else{
             change_class_t_suggestion(true);
             // get array of cities, that have exact query
             var arr = returnSearch(text);
-            if(arr.length == 0){ // if array isnt empty
+            if(arr.length === 0){ // if array isnt empty
                 args.setSuggestion([]);
                 change_class_t_suggestion(false);
                 return;
@@ -69,13 +71,14 @@ export default function Search(args) {
 
             if(matches.ratings.length > 0){
                 var filter_matches = matches.ratings.filter((x) => {
-                    if(x.target != matches.bestMatch.target){
+                    if(x.target !== matches.bestMatch.target){
                         // if city isnt the best match one, and its rating is above 0.6
                         // then return it as array
                         if(x.rating >= 0.5){
                             return x.target;
                         }
                     }
+                    return null; // this is here just to fix warning
                 });
                 suggestions = [matches.bestMatch, ...filter_matches];
                 
@@ -84,7 +87,7 @@ export default function Search(args) {
             // full array of suggestions
             //console.log(suggestions);
 
-            if(suggestions.length == 1){ // only one suggestion
+            if(suggestions.length === 1){ // only one suggestion
                 args.setSuggestion([suggestions[0]]);
             }else if(suggestions.length > 1){ // more than one
                 args.setSuggestion([suggestions[0], suggestions[1]]);
@@ -94,10 +97,17 @@ export default function Search(args) {
         }
     }
 
+    const search_ref = useRef(); // get text from search input
+    function submitHandler(){
+        const searched_city = search_ref.current.value;
+        navigate("/weather/"+ searched_city); // switch to another page
+    }
+
+
     return (
         <div className='search_container'>
-            <input onChange={onSearchChangeHandler} type="text" className='search-input' placeholder='Enter a city'/>
-            <button><SearchHeart/></button>
+            <input ref={search_ref} onChange={onSearchChangeHandler} type="text" className='search-input' placeholder='Enter a city'/>
+            <button onClick={submitHandler}><SearchHeart/></button>
         </div>
     )
 }
