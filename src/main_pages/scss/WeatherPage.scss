@@ -14,5 +14,22 @@ html{
 
 // ------------- weather big cards -------------
 .weather_main_card{
-    background-color: rgba($color: #202020, $alpha: 1);
+    display: flex;
+    color: white;
+    background-color: rgba($color: #252525, $alpha: 1);
+
+    border-radius: 25px;
+    
+    .image{
+        padding: 10px;
+        border-radius: 25px;
+
+        .temp{
+            font-size: xx-large;
+        }
+
+        .desc{
+            font-size: large;
+        }
+    }
 }
