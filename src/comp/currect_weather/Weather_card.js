@@ -15,16 +15,18 @@ export default function Weather_card(args) {
         const clouds = data['clouds']['all'];
 
         return (
-            <div className='image bg-gradient-to-tr from-cyan-300 to-blue-400'>
+            <div className='image bg-gradient-to-tr from-green-400 to-lime-400'>
                 
                 <p className='flex gap-2 items-center'><GeoAltFill /> {city_name}, {country}</p>
-                <Img icon={args.data["weather"]["0"]["icon"]} size="4" />
+                <div className='flex justify-center'>
+                    <Img icon={args.data["weather"]["0"]["icon"]} size="4" />
+
+                </div>
                 <div>
                     <p className='temp'>{temp}°C</p>
                     <p className='desc'>{desc}</p>
                 </div>
                 
-                {/* <Weather_description data={weather_api}/> */}
             </div>
         )
 
