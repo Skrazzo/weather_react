@@ -13,7 +13,7 @@ import {
 export default function App() {
   return (
     
-    <BrowserRouter>
+    <BrowserRouter basename='/weather'>
       <Routes>
         <Route index element={<MainPage />}/>
         <Route path='/weather/:query' element={<WeatherPage />} />
