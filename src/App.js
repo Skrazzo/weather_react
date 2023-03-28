@@ -9,13 +9,17 @@ import {
 } from "react-router-dom";
 
 
+
 export default function App() {
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route index element={<MainPage />}/>
         <Route path='/weather/:query' element={<WeatherPage />} />
       </Routes>
     </BrowserRouter>
+
+    
   )
 }

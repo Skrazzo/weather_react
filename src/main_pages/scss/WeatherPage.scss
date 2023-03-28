@@ -15,12 +15,17 @@ html{
 // ------------- weather big cards -------------
 .weather_main_card{
     // display: flex;
+    // overflow: hidden;
     color: white;
-    background-color: rgba($color: #252525, $alpha: 1);
+    background-color: rgba($color: $div_dark_primary, $alpha: 1);
 
     border-radius: 25px;
     
     .image{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
         padding: 15px;
         border-radius: 25px;
 
@@ -31,5 +36,40 @@ html{
         .desc{
             font-size: large;
         }
+    }
+}
+
+
+// --------------- day forecast cards -----------------
+
+
+.day-forecast{
+    overflow-x: scroll;
+    
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    // margin-bottom: 100px;
+
+    div{
+        min-width: 75px;
+        transition: 250ms;
+        background-color: darken($color: $div_dark_primary, $amount: 3);
+        
+        &:hover{
+            color: black;
+            padding: 5px;
+            background-color: darken($color: white, $amount: 10);
+        }
+
+    }
+
+    .today{
+        background-color: darken($color: white, $amount: 20);
+        color: black;
     }
 }
