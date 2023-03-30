@@ -36,7 +36,7 @@ export function get_day_info(arr, day_index = 0){
 
     for(var i = 0; i < arr.length; i++){
         var time = arr[i].dt_txt.split(" ")[1];
-        if(time == "00:00:00"){ // new day started
+        if(time === "00:00:00"){ // new day started
             // if recording is enabled when reached 00:00:00
             // that means that we have reached day that shouldn't be returned
             if(recording){ 
@@ -57,4 +57,42 @@ export function get_day_info(arr, day_index = 0){
     }
 
     return temp;
+}
+
+// function that exports needeed chart labels from selected day and given array
+export function get_chart_labels(arr, day_index = 0){
+
+    var labels = get_day_info(arr, day_index).map((x) =>{
+        const dt = new Date(x.dt * 1000);
+        var hours = ((dt.getHours() < 10) ? "0" : "") + dt.getHours();
+        var minutes = ((dt.getMinutes() < 10) ? "0" : "") + dt.getMinutes();
+        return hours + ":" + minutes;
+    });
+
+    return labels
+}
+
+// function that exports selected chart values from selected day and given array
+export function get_chart_values(arr, chart, day_index = 0){
+    var values = [];
+    
+    switch(chart){
+        case 0: // temperature
+            values = get_day_info(arr, day_index).map((x) =>{
+                return x.main.temp;
+            });
+            break;
+        case 1:
+            values = get_day_info(arr, day_index).map((x) =>{
+                return x.main.humidity;
+            });
+            break;
+        case 2:
+            values = get_day_info(arr, day_index).map((x) =>{
+                return x.clouds.all;
+            });
+            break;
+        
+    }
+    return values;
 }

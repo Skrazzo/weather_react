@@ -6,6 +6,7 @@ export default function Day_card(args) {
         if(args.day_index !== null){
 
             args.set_current_day(args.day_index);
+            args.drawChart(args.day_index);
         }
     }
     

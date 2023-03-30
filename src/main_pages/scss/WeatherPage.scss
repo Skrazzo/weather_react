@@ -73,3 +73,27 @@ html{
         color: black;
     }
 }
+
+
+// ------------ buttons -----------
+
+.btn{
+    font-size: x-large;
+    background-color: transparent;
+    padding: 3px 6px;
+    border-radius: 4px;
+    
+    transition: 250ms;
+    &:hover{
+        background-color: darken($color: white, $amount: 80);
+    }
+}
+
+.selected{
+    background-color: $btn_color_primary;
+    transition: 250ms;
+
+    &:hover{
+        background-color: darken($color: $btn_color_primary, $amount: 10);
+    }
+}
