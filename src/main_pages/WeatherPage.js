@@ -41,8 +41,9 @@ export default function WeatherPage() {
     // load it only once, when the page is rendered
     useEffect( () => {
         
+        
         get_current_data(route_args.query, set_weather_api); // function that gets data for current weather
-        get_4hour_forecast(route_args.query, set_4hour_api); // 
+        get_4hour_forecast(route_args.query, set_4hour_api, drawChart); // 
     }, []);
 
 
@@ -53,7 +54,6 @@ export default function WeatherPage() {
     try{
         average_temp_forecast = get_average_temp_from_forecast(hour_forecast.list);
         average_icons_forecast = get_icons_from_forecast(hour_forecast.list);
-
         
         //get_chart_labels(hour_forecast.list, current_selected_day);
         //get_chart_values(hour_forecast.list, 2, current_selected_day)
@@ -61,11 +61,15 @@ export default function WeatherPage() {
 
     }
 
-    function drawChart(day, chart = chart_data.chart){
-        console.log(day);
-
+    function drawChart(day, chart = chart_data.chart, custom_hour_forecast = null){
         
-        const labels = get_chart_labels(hour_forecast.list, day);
+        var labels;
+        if(custom_hour_forecast !== null){ // on first load, this will called with api recieved data
+            labels = get_chart_labels(custom_hour_forecast.list, day);
+            
+        }else{
+            labels = get_chart_labels(hour_forecast.list, day);
+        }
         
         // for every button needs to have it own label
         var datasetLabel = "Temperature";
@@ -85,7 +89,7 @@ export default function WeatherPage() {
                     label: datasetLabel,
                     backgroundColor: "#32CD32",
                     borderColor: "#32CD32",
-                    data: get_chart_values(hour_forecast.list, chart, day),
+                    data: get_chart_values((custom_hour_forecast !== null) ? custom_hour_forecast.list : hour_forecast.list, chart, day),
                 },
             ],
         };
@@ -118,10 +122,17 @@ export default function WeatherPage() {
                                     
                                     // index of day of the week 0 = monday
                                     var day_card_index = dt.getDay() + i - 1; 
+                                    
+                                    
                                     // if day index is 7 set it to 0 so that it means it monday
                                     day_card_index = (day_card_index >= 7) ? day_card_index -= 7 : day_card_index; 
+                                    // if day index is below zero for example -1 which equals sunday
+                                    // then we should do weekdays.length + day_card_index, so the program takes sunday
+                                    // we need to put + because - + - = + and in the end it would be 8
+                                    // since for some reason -1 doesn't fucking work
+                                    day_card_index = (day_card_index < 0) ? weekdays.length + day_card_index : day_card_index;
                                     
-                                    
+
                                     return <Day_card drawChart={drawChart} key={uuidv4()} set_current_day={set_current_selected_day} day_index={i} today={(i === current_selected_day) ? true : false} temp={x} icon={average_icons_forecast[i]} day={weekdays[day_card_index]}/>;
                                 })}
                             </div>
@@ -134,6 +145,7 @@ export default function WeatherPage() {
                         <p className='text-xl font-bold my-2 italic'>{weekdays_full[((global_dt.getDay() + current_selected_day - 1) >= 7 ? global_dt.getDay() + current_selected_day - 1 - 7: global_dt.getDay() + current_selected_day - 1 )]}</p>
                         <div className='day-forecast flex sm:grid grid-cols-5 gap-2'>
                             {get_day_info(hour_forecast.list, current_selected_day).map((x) => {
+                                
                                 const dt = new Date(x.dt * 1000);
                                 var hours = ((dt.getHours() < 10) ? "0" : "") + dt.getHours();
                                 var minutes = ((dt.getMinutes() < 10) ? "0" : "") + dt.getMinutes();

@@ -18,8 +18,8 @@ function MainPage() {
   
 
   return (
-    <div className='bg-overlay'>
-      <div className='main_container container mx-auto xl:max-w-xl'>
+    <div className='bg-overlay h-screen'>
+      <div className='main_container container h-full mx-auto xl:max-w-xl'>
         <Search setSuggestion={setSuggestion}/>
 
         <div className='suggestion-container'>

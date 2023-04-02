@@ -7,7 +7,9 @@ export function get_average_temp_from_forecast(arr){
     // five day forecast
     for(var i = 0; i < 5; i++){
         var temp_arr = get_day_info(arr, i);
-        temp_arr.map(x => { // loop through whole day and sum temperature
+        temp = 0;
+        
+        temp_arr.map((x) => { // loop through whole day and sum temperature
             temp += x.main.temp;
         });
 
@@ -34,27 +36,31 @@ export function get_day_info(arr, day_index = 0){
     var recording = false;
     var temp = [];
 
-    for(var i = 0; i < arr.length; i++){
-        var time = arr[i].dt_txt.split(" ")[1];
-        if(time === "00:00:00"){ // new day started
-            // if recording is enabled when reached 00:00:00
-            // that means that we have reached day that shouldn't be returned
-            if(recording){ 
-                break;
+    if(arr !== undefined){
+        
+        for(var i = 0; i < arr.length; i++){
+            var time = arr[i].dt_txt.split(" ")[1];
+            if(time === "00:00:00"){ // new day started
+                // if recording is enabled when reached 00:00:00
+                // that means that we have reached day that shouldn't be returned
+                if(recording){ 
+                    break;
+                }
+    
+                if(day_index === 0){ // if reached day that should be returned
+                    recording = true;
+                }else{
+                    day_index--;
+                }
             }
-
-            if(day_index === 0){ // if reached day that should be returned
-                recording = true;
-            }else{
-                day_index--;
+    
+            if(recording){
+                temp.push(arr[i]);
             }
+    
         }
-
-        if(recording){
-            temp.push(arr[i]);
-        }
-
     }
+
 
     return temp;
 }
