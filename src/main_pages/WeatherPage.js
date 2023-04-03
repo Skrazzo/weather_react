@@ -18,7 +18,7 @@ import { ThermometerHalf, Droplet, Cloud } from 'react-bootstrap-icons';
 import { Chart } from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import axios from 'axios';
-
+import BackButton from '../comp/BackButton';
 // variables go after imports
 const d2d = require('degrees-to-direction');
 
@@ -112,9 +112,9 @@ export default function WeatherPage() {
     try{
         return (
             <div className='bg-overlay'>
-                
+                <BackButton />
                 <div className='main_container gap-2 container mx-auto xl:max-w-2xl'>
-                    <div className='weather_main_card shadow-2xl mx-2 grid grid-cols-1 sm:grid-cols-3'>
+                    <div className='weather_main_card mt-10 xl:mt-0 shadow-2xl mx-2 grid grid-cols-1 sm:grid-cols-3'>
                         <Weather_card data={weather_api} />
                         
                         <div className='col-span-2 py-5'>

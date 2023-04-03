@@ -7,3 +7,27 @@ $div_dark_primary: #252525;
 
 // ----------- app.js --------
 $app_background: "../../img/1.png";
+
+.back_btn{
+    position: absolute;
+    margin: 10px;
+    top: 0%;
+    left: 0%;
+
+    color: $div_color_primary;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    background-color: $div_dark_primary;
+    padding: 5px 7px;
+    border-radius: 4px;
+    outline: none;
+
+    transition: 500ms;
+    &:hover{
+        background-color: $div_color_primary;
+        color: $div_dark_primary;
+
+    }
+}

@@ -4,7 +4,7 @@ import "./scss/MainPage.scss";
 import Search from '../comp/search/Search';
 import Suggestion from '../comp/search/Suggestion';
 import { v4 as uuidv4 } from 'uuid';
-
+import BackButton from "../comp/BackButton";
 
 
 
@@ -19,6 +19,7 @@ function MainPage() {
 
   return (
     <div className='bg-overlay h-screen'>
+      <BackButton />
       <div className='main_container container h-full mx-auto xl:max-w-xl'>
         <Search setSuggestion={setSuggestion}/>
 
