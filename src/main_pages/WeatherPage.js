@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import "./scss/WeatherPage.scss";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { get_current_data, get_4hour_forecast } from '../public/api_call';
 import Weather_card from '../comp/current_weather/Weather_card';
 import Weather_description from '../comp/current_weather/Weather_description';
@@ -17,9 +17,10 @@ import { Tooltip } from '@mantine/core';
 import { ThermometerHalf, Droplet, Cloud } from 'react-bootstrap-icons';
 import { Chart } from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
+import axios from 'axios';
 
 // variables go after imports
-var d2d = require('degrees-to-direction');
+const d2d = require('degrees-to-direction');
 
 
 export default function WeatherPage() {
@@ -30,7 +31,7 @@ export default function WeatherPage() {
     const [chart_data, set_chart_data] = useState({"chart": 0, "data":{labels: ["1"], datasets: [ { label: "Temperature", backgroundColor: "rgb(255, 99, 132)", borderColor: "rgb(255, 99, 132)", data: ["1"], }, ], }});
 
     const route_args = useParams(); // arguments from the link
-
+    const navigate = useNavigate();
     // variables for next day average forecast
     const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const weekdays_full = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -44,6 +45,7 @@ export default function WeatherPage() {
         
         get_current_data(route_args.query, set_weather_api); // function that gets data for current weather
         get_4hour_forecast(route_args.query, set_4hour_api, drawChart); // 
+        check_city_exists(route_args.query);
     }, []);
 
 
@@ -98,11 +100,19 @@ export default function WeatherPage() {
         set_chart_data({"chart": chart, "data": data});
     }
 
-    
+    function check_city_exists(city){
+        var get_city_url = "http://api.openweathermap.org/geo/1.0/direct?q="+ city +"&limit=1&appid="+ process.env.REACT_APP_API_KEY;
+        axios.get(get_city_url).then((data) => {
+            if(data.data.length === 0){
+                navigate("../error");
+            }
+        });
+    }
 
     try{
         return (
             <div className='bg-overlay'>
+                
                 <div className='main_container gap-2 container mx-auto xl:max-w-2xl'>
                     <div className='weather_main_card shadow-2xl mx-2 grid grid-cols-1 sm:grid-cols-3'>
                         <Weather_card data={weather_api} />
@@ -187,7 +197,8 @@ export default function WeatherPage() {
         // after api call gets completed, the page will reload with all necessery information
         return (
             <div className='bg-overlay'>
-                <div className='main_container container mx-auto xl:max-w-xl'>
+                
+                <div className='main_container h-screen container mx-auto xl:max-w-xl'>
                     
                 </div>
             </div>

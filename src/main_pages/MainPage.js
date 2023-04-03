@@ -22,7 +22,7 @@ function MainPage() {
       <div className='main_container container h-full mx-auto xl:max-w-xl'>
         <Search setSuggestion={setSuggestion}/>
 
-        <div className='suggestion-container'>
+        <div className='suggestion-container mx-3'>
           {suggestion.map(x => {
             return <Suggestion key={uuidv4()} text={x.target} />;
           })}

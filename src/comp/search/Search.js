@@ -100,13 +100,19 @@ export default function Search(args) {
     const search_ref = useRef(); // get text from search input
     function submitHandler(){
         const searched_city = search_ref.current.value;
-        navigate("/weather/"+ searched_city); // switch to another page
+        navigate("/w/"+ searched_city); // switch to another page
     }
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            const searched_city = search_ref.current.value;
+            navigate("/w/"+ searched_city); // switch to another page
+        }
+    };
 
     return (
-        <div className='search_container'>
-            <input ref={search_ref} onChange={onSearchChangeHandler} type="text" className='search-input' placeholder='Enter a city'/>
+        <div className='search_container mx-3'>
+            <input onKeyDown={handleKeyDown} ref={search_ref} onChange={onSearchChangeHandler} type="text" className='search-input' placeholder='Enter a city'/>
             <button onClick={submitHandler}><SearchHeart/></button>
         </div>
     )
