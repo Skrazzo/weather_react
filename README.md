@@ -4,4 +4,4 @@
 REACT_APP_API_KEY="YOUR API KEY"
 ```
 
-Also you can check it out on **[skrazzo.xyz](https://skrazzo.xyz/home/weather/)**
+
