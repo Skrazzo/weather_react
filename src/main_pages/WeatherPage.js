@@ -23,6 +23,7 @@ import BackButton from '../comp/BackButton';
 const d2d = require('degrees-to-direction');
 
 
+
 export default function WeatherPage() {
     const global_dt = new Date();
     const [weather_api, set_weather_api] = useState(null);
@@ -101,7 +102,7 @@ export default function WeatherPage() {
     }
 
     function check_city_exists(city){
-        var get_city_url = "http://api.openweathermap.org/geo/1.0/direct?q="+ city +"&limit=1&appid="+ process.env.REACT_APP_API_KEY;
+        var get_city_url = "https://api.openweathermap.org/geo/1.0/direct?q="+ city +"&limit=1&appid="+ process.env.REACT_APP_API_KEY;
         axios.get(get_city_url).then((data) => {
             if(data.data.length === 0){
                 navigate("../error");
