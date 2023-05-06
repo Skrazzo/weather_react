@@ -47,6 +47,25 @@ export default function WeatherPage() {
         get_current_data(route_args.query, set_weather_api); // function that gets data for current weather
         get_4hour_forecast(route_args.query, set_4hour_api, drawChart); // 
         check_city_exists(route_args.query);
+
+        // set info for recent search
+        var recentSearch = window.localStorage.getItem('recentSearch');
+
+        if(recentSearch === null){
+            recentSearch = window.localStorage.setItem('recentSearch',JSON.stringify([route_args.query, '', '']));
+        }else{
+            recentSearch = JSON.parse(recentSearch);
+
+            // if this search doesn't exist in recent array then add it
+            if(!recentSearch.includes(route_args.query)){
+                recentSearch[2] = recentSearch[1];
+                recentSearch[1] = recentSearch[0];
+                recentSearch[0] = route_args.query;
+                
+                window.localStorage.setItem('recentSearch', JSON.stringify(recentSearch));
+            }
+            
+        }
     }, []);
 
 
@@ -99,6 +118,8 @@ export default function WeatherPage() {
     
         
         set_chart_data({"chart": chart, "data": data});
+
+
     }
 
     function check_city_exists(city){

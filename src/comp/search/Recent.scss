@@ -1,0 +1,36 @@
+@import '../../public/colors.scss';
+
+.Recent-container{
+    display: flex;
+    margin: 5px 13px;
+    gap: 5px;
+    
+
+    color: white;
+
+    
+
+    span{
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        
+        border-radius: 4px;
+        
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 33%;
+
+        background-color: $div_dark_primary;
+
+        padding: 5px 10px;
+        font-size: large;
+
+        transition: 200ms;
+        &:hover{
+            background-color: $div_color_primary;
+            color: $div_dark_primary;
+        }
+    }
+}

@@ -5,7 +5,7 @@ import Search from '../comp/search/Search';
 import Suggestion from '../comp/search/Suggestion';
 import { v4 as uuidv4 } from 'uuid';
 import BackButton from "../comp/BackButton";
-
+import Recent from "../comp/search/Recent";
 
 
 
@@ -13,28 +13,28 @@ import BackButton from "../comp/BackButton";
 
 
 function MainPage() {
-  const [suggestion, setSuggestion] = useState([]);
+    const [suggestion, setSuggestion] = useState([]);
+    var recentSreach = window.localStorage.getItem('recentSearch');
 
-  
+    return (
+        <div className='bg-overlay h-screen'>
+            <BackButton />
+            <div className='main_container container h-full mx-auto xl:max-w-xl'>
+                <Recent recent={window.localStorage.getItem('recentSearch')}/>
+                <Search setSuggestion={setSuggestion}/>
 
-  return (
-    <div className='bg-overlay h-screen'>
-      <BackButton />
-      <div className='main_container container h-full mx-auto xl:max-w-xl'>
-        <Search setSuggestion={setSuggestion}/>
+                <div className='suggestion-container mx-3'>
+                {suggestion.map(x => {
+                    return <Suggestion key={uuidv4()} text={x.target} />;
+                })}
+                
+                
 
-        <div className='suggestion-container mx-3'>
-          {suggestion.map(x => {
-            return <Suggestion key={uuidv4()} text={x.target} />;
-          })}
-          
-          
+                </div>
+            </div>
 
         </div>
-      </div>
-
-    </div>
-  );
+    );
 }
 
 export default MainPage;
